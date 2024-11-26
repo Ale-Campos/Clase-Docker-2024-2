@@ -1,0 +1,29 @@
+services:
+  springboot:
+    image: springbootapp
+    container_name: mi-springboot
+    ports:
+      - "8088:8080"
+    environment:
+      DBNAME: ejemplo
+      DBUSER: ejemplo
+      DBPASS: test1234
+      DBHOST: un-mariadb
+    depends_on:
+      - mariadb-development
+    restart: unless-stopped
+
+  mariadb-development:
+    image: mariadb
+    container_name: un-mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: test1234
+      MARIADB_DATABASE: ejemplo
+      MARIADB_USER: ejemplo
+      MARIADB_PASSWORD: test1234
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
